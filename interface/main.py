@@ -9,7 +9,7 @@ import cv2
 
 def load_model():
     #model_path='/Users/yassir2/code/Yassirbenj/amazigh_text/models/amazighmodel3.h5'
-    model=tf.keras.models.load_model("interface/amazighmodel3.h5")
+    model=tf.keras.models.load_model("interface/amazighmodel2.h5")
     return model
 
 def predict(model,image):
