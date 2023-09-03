@@ -34,7 +34,8 @@ def trim(image):
 
 def preprocess(image):
     results=[]
-    thresh = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
+    gray_image = cv2.cvtColor(image, cv2.COLOR_RGBA2GRAY)
+    thresh = cv2.threshold(gray_image, 0, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
     contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
