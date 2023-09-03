@@ -83,7 +83,7 @@ with st.form("input_form",clear_on_submit=True):
         if input_img is not None:
             result=[]
             result_proba=1
-            cv2.imwrite("image_input",input_img)
+            cv2.imwrite("image_input.jpeg",input_img)
             st.image(input_img)
             st.text(input_img.shape)
             image_brute=cv2.imread("image_input")
