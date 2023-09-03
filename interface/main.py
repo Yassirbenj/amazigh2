@@ -36,6 +36,7 @@ def preprocess(image):
     results=[]
     gray_image = cv2.cvtColor(image, cv2.COLOR_RGBA2GRAY)
     thresh = cv2.threshold(gray_image, 0, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
+    st.image(thresh)
     contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
@@ -81,10 +82,11 @@ with st.form("input_form",clear_on_submit=True):
         if input_img is not None:
             result=[]
             result_proba=1
+            st.image(input_img)
             imgs=preprocess(input_img)
             loaded_model = load_model()
             for img in imgs:
-                st.image(img.numpy())
+                #st.image(img.numpy())
                 prediction = predict(loaded_model,img)
                 letter=prediction[0]
                 proba= prediction[1]
