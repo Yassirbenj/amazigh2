@@ -84,7 +84,7 @@ with st.form("input_form",clear_on_submit=True):
             imgs=preprocess(input_img)
             loaded_model = load_model()
             for img in imgs:
-                #st.image(img)
+                st.image(img)
                 prediction = predict(loaded_model,img)
                 letter=prediction[0]
                 proba= prediction[1]
