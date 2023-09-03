@@ -1,8 +1,5 @@
-
 numpy
 opencv-contrib-python
-
-
 streamlit
 tensorflow
 numpy
