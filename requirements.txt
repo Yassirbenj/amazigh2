@@ -1,0 +1,8 @@
+
+numpy==1.23.5
+opencv-python
+
+streamlit
+tensorflow
+numpy
+streamlit-drawable-canvas
