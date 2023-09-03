@@ -87,6 +87,7 @@ with st.form("input_form",clear_on_submit=True):
             st.image(input_img)
             st.text(input_img.shape)
             image_brute=cv2.imread("image_input.jpeg")
+            st.image(image_brute)
             imgs=preprocess(image_brute)
             loaded_model = load_model()
             for img in imgs:
