@@ -84,6 +84,7 @@ with st.form("input_form",clear_on_submit=True):
             result=[]
             result_proba=1
             st.image(input_img)
+            st.text(input_img.shape)
             imgs=preprocess(input_img)
             loaded_model = load_model()
             for img in imgs:
