@@ -1,6 +1,6 @@
 
 numpy==1.23.5
-opencv-python
+opencv-python-headless
 
 streamlit
 tensorflow
