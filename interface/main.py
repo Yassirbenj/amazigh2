@@ -45,7 +45,7 @@ def preprocess(image):
     thresh = cv2.threshold(image_rescale, 128, 255, cv2.THRESH_BINARY)[1]
     st.image(thresh)
     st.text(np.unique(thresh,return_counts=True))
-    contours,hierarchy=cv2.findContours(image_rescale, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         item = image[y:y+h, x:x+w]
