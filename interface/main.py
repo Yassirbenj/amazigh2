@@ -32,45 +32,48 @@ def trim(image):
         image=image.crop(box)
     return image
 
+def pad_image(image,desired_size):
+    height, width = image.shape
+
+    # Create a new blank square canvas
+    square_image = np.zeros((desired_size, desired_size, 1), dtype=np.uint8)
+
+    # Calculate the padding values to center the original image
+    top_pad = (desired_size - height) // 2
+    bottom_pad = desired_size - height - top_pad
+    left_pad = (desired_size - width) // 2
+    right_pad = desired_size - width - left_pad
+
+    # Copy the original image into the center of the square canvas
+    square_image[top_pad:top_pad+height, left_pad:left_pad+width] = image
+
+    return image
+
 def preprocess(image):
     results=[]
     image_rescale=image[:,:,3]
-    #st.image(image[:,:,0])
-    #st.image(image[:,:,1])
-    #st.image(image[:,:,2])
-    #st.image(image[:,:,3])
-    #st.text(np.unique(image_rescale,return_counts=True))
-    #gray_image = cv2.cvtColor(image_rescale, cv2.COLOR_RGB2GRAY)
-    #st.image(gray_image)
     thresh = cv2.threshold(image_rescale, 0, 255, cv2.THRESH_BINARY)[1]
     st.image(thresh)
-    #st.text(np.unique(thresh,return_counts=True))
     contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     y_min=1000
-    #st.text(contours)
-    #st.text(hierarchy)
+    y_max=0
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         if y<y_min:
             y_min=y
+        if y>y_max:
+            y_max=y
 
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         item = image[y_min:y+h, x:x+w]
         st.image(item)
         st.text(item.shape)
+        resized_array=pad_image(item,y_max)
+        st.image(resized_array)
         resized_array = cv2.resize(item, (64, 64))
-        #st.text(resized_array.shape)
         resized_array = resized_array[:,:,3]
-        #st.text(resized_array.shape)
         resized_array = np.expand_dims(resized_array, axis=-1)
-        #st.text(resized_array.shape)
-        #img = Image.fromarray(item)
-        #new_image=img.resize((64,64))
-        #img_array = np.array(new_image)
-        #img_array=img_array[:,:,1]
-        #img_array=np.reshape(img_array,(64,64,1))
-        #st.image(resized_array)
         img_tensor=tf.convert_to_tensor(resized_array)
         results.append(img_tensor)
     return results
