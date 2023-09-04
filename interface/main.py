@@ -47,8 +47,8 @@ def preprocess(image):
     #st.text(np.unique(thresh,return_counts=True))
     contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     y_min=1000
-    st.text(contours)
-    st.text(hierarchy)
+    #st.text(contours)
+    #st.text(hierarchy)
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         if y<y_min:
@@ -107,7 +107,7 @@ with st.form("input_form",clear_on_submit=True):
         if input_img is not None:
             st.text(input_img.shape)
             result=[]
-            result_proba=1
+            result_proba=100
             imgs=preprocess(input_img)
             loaded_model = load_model()
             for img in imgs:
@@ -116,5 +116,5 @@ with st.form("input_form",clear_on_submit=True):
                 letter=prediction[0]
                 proba= prediction[1]
                 result.append(letter)
-                result_proba*=float(proba)
+                result_proba*=float(proba)/100
             st.write(f"<h3>The prediction is: {result} with probability of {result_proba}% </h3>", unsafe_allow_html=True)
