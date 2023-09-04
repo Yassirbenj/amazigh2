@@ -38,7 +38,7 @@ def preprocess(image):
     st.image(image_rescale)
     gray_image = cv2.cvtColor(image_rescale, cv2.COLOR_BGR2GRAY)
     st.image(gray_image)
-    thresh = cv2.threshold(gray_image, 0, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
+    thresh = cv2.threshold(gray_image, 128, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
     st.image(thresh)
     contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for contour in contours:
