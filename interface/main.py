@@ -47,10 +47,12 @@ def preprocess(image):
     st.text(np.unique(thresh,return_counts=True))
     contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     y_min=1000
+    st.text(contours,hierarchy)
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         if y<y_min:
             y_min=y
+
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         item = image[y_min:y+h, x:x+w]
