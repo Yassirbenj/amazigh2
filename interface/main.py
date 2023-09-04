@@ -35,10 +35,10 @@ def trim(image):
 def preprocess(image):
     results=[]
     image_rescale=image[:,:,3]
-    st.image(image[:,:,0])
-    st.image(image[:,:,1])
-    st.image(image[:,:,2])
-    st.image(image[:,:,3])
+    #st.image(image[:,:,0])
+    #st.image(image[:,:,1])
+    #st.image(image[:,:,2])
+    #st.image(image[:,:,3])
     #gray_image = cv2.cvtColor(image_rescale, cv2.COLOR_RGB2GRAY)
     #st.image(gray_image)
     thresh = cv2.threshold(image_rescale, 128, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
@@ -92,7 +92,7 @@ with st.form("input_form",clear_on_submit=True):
             imgs=preprocess(input_img)
             loaded_model = load_model()
             for img in imgs:
-                #st.image(img.numpy())
+                st.image(img.numpy())
                 prediction = predict(loaded_model,img)
                 letter=prediction[0]
                 proba= prediction[1]
