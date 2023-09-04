@@ -58,7 +58,9 @@ def preprocess(image):
         st.text(item.shape)
         resized_array = cv2.resize(item, (64, 64))
         st.text(resized_array.shape)
-        resized_array = resized_array[:,:,2]
+        resized_array = resized_array[:,:,3]
+        st.text(resized_array.shape)
+        resized_array = np.expand_dims(resized_array, axis=-1)
         st.text(resized_array.shape)
         #img = Image.fromarray(item)
         #new_image=img.resize((64,64))
