@@ -34,8 +34,11 @@ def trim(image):
 
 def preprocess(image):
     results=[]
-    image_rescale=image[:,:,:3]
-    st.image(image_rescale)
+    image_rescale=image[:,:,:]
+    st.image(image[:,:,0])
+    st.image(image[:,:,1])
+    st.image(image[:,:,2])
+    st.image(image[:,:,3])
     gray_image = cv2.cvtColor(image_rescale, cv2.COLOR_RGB2GRAY)
     st.image(gray_image)
     thresh = cv2.threshold(gray_image, 128, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
