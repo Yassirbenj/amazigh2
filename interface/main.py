@@ -39,12 +39,13 @@ def preprocess(image):
     #st.image(image[:,:,1])
     #st.image(image[:,:,2])
     st.image(image[:,:,3])
+    st.text(np.unique(image_rescale,return_counts=True))
     #gray_image = cv2.cvtColor(image_rescale, cv2.COLOR_RGB2GRAY)
     #st.image(gray_image)
     thresh = cv2.threshold(image_rescale, 0, 255, cv2.THRESH_BINARY_INV)[1]
     st.image(thresh)
     st.text(np.unique(thresh,return_counts=True))
-    contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours,hierarchy=cv2.findContours(image_rescale, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         item = image[y:y+h, x:x+w]
