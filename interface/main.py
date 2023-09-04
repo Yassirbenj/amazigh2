@@ -34,9 +34,9 @@ def trim(image):
 
 def preprocess(image):
     results=[]
-    image_rescale=image[:,:,1]
+    image_rescale=image[:,:,1:4]
     st.image(image_rescale)
-    gray_image = cv2.cvtColor(image_rescale, cv2.COLOR_RGBA2GRAY)
+    gray_image = cv2.cvtColor(image_rescale, cv2.COLOR_BGR2GRAY)
     st.image(gray_image)
     thresh = cv2.threshold(gray_image, 0, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
     st.image(thresh)
@@ -83,6 +83,7 @@ with st.form("input_form",clear_on_submit=True):
     #input_img = st.file_uploader('character image',type=['png', 'jpg','jpeg'])
     if st.form_submit_button("Predict"):
         if input_img is not None:
+            st.text(input_img.shape)
             result=[]
             result_proba=1
             imgs=preprocess(input_img)
