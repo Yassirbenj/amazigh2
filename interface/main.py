@@ -34,14 +34,14 @@ def trim(image):
 
 def preprocess(image):
     results=[]
-    image_rescale=image[:,:,:]
+    image_rescale=image[:,:,3]
     st.image(image[:,:,0])
     st.image(image[:,:,1])
     st.image(image[:,:,2])
     st.image(image[:,:,3])
-    gray_image = cv2.cvtColor(image_rescale, cv2.COLOR_RGB2GRAY)
-    st.image(gray_image)
-    thresh = cv2.threshold(gray_image, 128, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
+    #gray_image = cv2.cvtColor(image_rescale, cv2.COLOR_RGB2GRAY)
+    #st.image(gray_image)
+    thresh = cv2.threshold(image_rescale, 128, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
     st.image(thresh)
     contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for contour in contours:
