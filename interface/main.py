@@ -34,7 +34,8 @@ def trim(image):
 
 def preprocess(image):
     results=[]
-    gray_image = cv2.cvtColor(image, cv2.COLOR_RGBA2GRAY)
+    image_rescale=image[:,:,1:4]
+    gray_image = cv2.cvtColor(image_rescale, cv2.COLOR_RGBA2GRAY)
     st.image(gray_image)
     thresh = cv2.threshold(gray_image, 0, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
     st.image(thresh)
@@ -83,12 +84,7 @@ with st.form("input_form",clear_on_submit=True):
         if input_img is not None:
             result=[]
             result_proba=1
-            cv2.imwrite("image_input.jpeg",input_img)
-            st.image(input_img)
-            st.text(input_img.shape)
-            image_brute=cv2.imread("image_input.jpeg")
-            st.image(image_brute)
-            imgs=preprocess(image_brute)
+            imgs=preprocess(input_img)
             loaded_model = load_model()
             for img in imgs:
                 #st.image(img.numpy())
