@@ -49,7 +49,7 @@ def pad_image(image,desired_size):
     # Copy the original image into the center of the square canvas
     square_image[top_pad:top_pad+height, left_pad:left_pad+width] = image
 
-    return image
+    return square_image
 
 def preprocess(image):
     results=[]
