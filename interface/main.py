@@ -46,15 +46,20 @@ def preprocess(image):
     st.image(thresh)
     st.text(np.unique(thresh,return_counts=True))
     contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    y_min=1000
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
-        item = image[y:y+h, x:x+w]
+        if y<y_min:
+            y_min=y
+    for contour in contours:
+        x, y, w, h = cv2.boundingRect(contour)
+        item = image[y_min:y+h, x:x+w]
         st.image(item)
         img = Image.fromarray(item)
         new_image=img.resize((64,64))
         img_array = np.array(new_image)
         img_array=img_array[:,:,1]
-        #img_array=np.reshape(img_array,(64,64,1))
+        img_array=np.reshape(img_array,(64,64,1))
         img_tensor=tf.convert_to_tensor(img_array)
         results.append(img_tensor)
     return results
@@ -95,10 +100,10 @@ with st.form("input_form",clear_on_submit=True):
             imgs=preprocess(input_img)
             loaded_model = load_model()
             for img in imgs:
-                #st.image(img.numpy())
+                st.image(img.numpy())
                 prediction = predict(loaded_model,img)
                 letter=prediction[0]
                 proba= prediction[1]
                 result.append(letter)
-                result_proba*=proba
+                result_proba*=float(proba)
             st.write(f"<h3>The prediction is: {result} with probability of {result_proba}% </h3>", unsafe_allow_html=True)
