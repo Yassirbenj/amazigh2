@@ -34,7 +34,7 @@ def trim(image):
 
 def preprocess(image):
     results=[]
-    image_rescale=image[:,:,1:4]
+    image_rescale=image[:,:,:]
     st.image(image_rescale)
     gray_image = cv2.cvtColor(image_rescale, cv2.COLOR_RGBA2GRAY)
     st.image(gray_image)
