@@ -57,19 +57,22 @@ def preprocess(image):
     contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     y_min=1000
     y_max=0
+    h_max=0
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         if y<y_min:
             y_min=y
         if y>y_max:
             y_max=y
+        if h>h_max:
+            h_max=h
 
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         item = image[y_min:y+h, x:x+w]
         st.image(item)
         st.text(item.shape)
-        resized_array=pad_image(item,y_max)
+        resized_array=pad_image(item,(y_max+h_max-y_min))
         st.image(resized_array)
         resized_array = cv2.resize(item, (64, 64))
         resized_array = resized_array[:,:,3]
