@@ -74,6 +74,7 @@ def preprocess(image):
         st.text(item.shape)
         resized_array=pad_image(item,(y_max+h_max-y_min))
         st.image(resized_array)
+        st.text(resized_array.shape)
         resized_array = cv2.resize(item, (64, 64))
         resized_array = resized_array[:,:,3]
         resized_array = np.expand_dims(resized_array, axis=-1)
