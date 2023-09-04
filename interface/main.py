@@ -73,7 +73,7 @@ def preprocess(image):
         st.image(item)
         st.text(item.shape)
         desired_size=y+h-y_min
-        st.texte(desired_size)
+        st.text(desired_size)
         resized_array=pad_image(item,desired_size)
         st.image(resized_array)
         st.text(resized_array.shape)
