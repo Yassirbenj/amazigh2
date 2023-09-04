@@ -54,11 +54,12 @@ def preprocess(image):
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         item = image[y_min:y+h, x:x+w]
-        #st.image(item)
+        st.image(item)
+        st.text(item.shape)
         img = Image.fromarray(item)
         new_image=img.resize((64,64))
         img_array = np.array(new_image)
-        #img_array=img_array[:,:,1]
+        img_array=img_array[:,:,1]
         img_array=np.reshape(img_array,(64,64,1))
         st.image(img_array)
         img_tensor=tf.convert_to_tensor(img_array)
