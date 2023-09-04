@@ -58,7 +58,7 @@ def preprocess(image):
         x, y, w, h = cv2.boundingRect(contour)
         item = image[y_min:y+h, x:x+w]
         st.image(item)
-        #st.text(item.shape)
+        st.text(item.shape)
         resized_array = cv2.resize(item, (64, 64))
         #st.text(resized_array.shape)
         resized_array = resized_array[:,:,3]
