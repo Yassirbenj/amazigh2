@@ -33,10 +33,10 @@ def trim(image):
     return image
 
 def pad_image(image,desired_size):
-    height, width = image.shape
+    height, width, channels = image.shape
 
     # Create a new blank square canvas
-    square_image = np.zeros((desired_size, desired_size, 1), dtype=np.uint8)
+    square_image = np.zeros((desired_size, desired_size, channels), dtype=np.uint8)
 
     # Calculate the padding values to center the original image
     top_pad = (desired_size - height) // 2
