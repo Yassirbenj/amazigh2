@@ -52,7 +52,7 @@ def pad_image(image,desired_size):
     return square_image
 
 def resize_image(image,desired_size):
-    original_height, original_width, _ = image.shape
+    original_height, original_width, channels = image.shape
 
     # Calculate the aspect ratio of the original image
     aspect_ratio = original_width / original_height
@@ -69,7 +69,7 @@ def resize_image(image,desired_size):
     resized_image = cv2.resize(image, (new_width, new_height))
 
     # Create a blank canvas of the desired size
-    final_image = np.zeros((desired_size[1], desired_size[0], 3), dtype=np.uint8)
+    final_image = np.zeros((desired_size[1], desired_size[0], channels), dtype=np.uint8)
 
     # Calculate the position to place the resized image in the center of the canvas
     x_offset = (desired_size[0] - new_width) // 2
@@ -108,6 +108,7 @@ def preprocess(image):
         resized_array=pad_image(item,desired_size)
         st.image(resized_array)
         st.text(resized_array.shape)
+        #resized_array = resized_array[:,:,3]
         resized_array=resize_image(resized_array,(64,64))
         #resized_array = cv2.resize(item, (64, 64))
         st.image(resized_array)
