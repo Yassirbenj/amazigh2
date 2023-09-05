@@ -92,7 +92,7 @@ def preprocess(image):
         x_list[i]=x
 
     x_list = sorted(x_list.items(), key=lambda x:x[1], reverse=False)
-    st.text(x_list)
+    st.text(x_list.keys())
 
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
