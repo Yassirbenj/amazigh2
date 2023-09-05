@@ -105,9 +105,10 @@ def preprocess(image):
         st.text(item.shape)
         desired_size=y+h-y_min
         st.text(desired_size)
-        resized_array=pad_image(item,desired_size)
-        st.image(resized_array)
-        st.text(resized_array.shape)
+        #resized_array=pad_image(item,desired_size)
+        resized_array=item
+        #st.image(resized_array)
+        #st.text(resized_array.shape)
         #resized_array = resized_array[:,:,3]
         resized_array=resize_image(resized_array,(64,64))
         #resized_array = cv2.resize(item, (64, 64))
