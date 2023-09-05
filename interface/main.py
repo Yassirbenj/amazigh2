@@ -110,6 +110,7 @@ def preprocess(image):
         #st.image(resized_array)
         #st.text(resized_array.shape)
         #resized_array = resized_array[:,:,3]
+        img = Image.fromarray(item)
         new_image=img.resize((64,64))
         img_array = np.array(new_image)
         img_array=np.reshape(img_array,(64,64,1))
