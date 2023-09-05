@@ -79,7 +79,7 @@ def resize_image(image,desired_size):
     return final_image
 
 def preprocess(image):
-    results=[]
+    results={}
     image_rescale=image[:,:,3]
     thresh = cv2.threshold(image_rescale, 0, 255, cv2.THRESH_BINARY)[1]
     contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -105,8 +105,12 @@ def preprocess(image):
         resized_array=resize_image(resized_array,(64,64))
         resized_array = resized_array[:,:,3]
         img_tensor=tf.convert_to_tensor(resized_array)
-        results.append(img_tensor)
-    return results
+        results["x"]=x
+        results["tensor"]=img_tensor
+        results_list=sorted(results.items(), key=lambda x:x[1], reverse=False)
+        st.text(results_list)
+        #results.append(img_tensor)
+    return results_list
 
 
 
@@ -132,8 +136,8 @@ with st.form("input_form",clear_on_submit=True):
             imgs=preprocess(input_img)
             loaded_model = load_model()
             for img in imgs:
-                st.image(img.numpy())
-                prediction = predict(loaded_model,img)
+                st.image(img[1].numpy())
+                prediction = predict(loaded_model,img[1])
                 letter=prediction[0]
                 proba= prediction[1]
                 result.append(letter)
