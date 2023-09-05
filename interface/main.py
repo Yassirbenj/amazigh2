@@ -54,23 +54,31 @@ def pad_image(image,desired_size):
 def resize_image(image,desired_size):
     original_height, original_width, _ = image.shape
 
-    # Calculate the center of the original image
-    center_x = original_width // 2
-    center_y = original_height // 2
+    # Calculate the aspect ratio of the original image
+    aspect_ratio = original_width / original_height
 
-    # Calculate the crop box
-    crop_x1 = max(center_x - desired_size[0] // 2, 0)
-    crop_x2 = min(center_x + desired_size[0] // 2, original_width)
-    crop_y1 = max(center_y - desired_size[1] // 2, 0)
-    crop_y2 = min(center_y + desired_size[1] // 2, original_height)
+    # Determine which dimension (width or height) should match the desired size
+    if aspect_ratio > 1.0:  # Width is larger
+        new_width = desired_size[0]
+        new_height = int(new_width / aspect_ratio)
+    else:  # Height is larger or equal
+        new_height = desired_size[1]
+        new_width = int(new_height * aspect_ratio)
 
-    # Crop the image to the desired size
-    cropped_image = image[crop_y1:crop_y2, crop_x1:crop_x2]
+    # Resize the image while preserving the aspect ratio
+    resized_image = cv2.resize(image, (new_width, new_height))
 
-    # Resize the cropped image to (64, 64) if necessary (in case the aspect ratio didn't match)
-    #resized_image = cv2.resize(cropped_image, desired_size)
+    # Create a blank canvas of the desired size
+    final_image = np.zeros((desired_size[1], desired_size[0], 3), dtype=np.uint8)
 
-    return cropped_image
+    # Calculate the position to place the resized image in the center of the canvas
+    x_offset = (desired_size[0] - new_width) // 2
+    y_offset = (desired_size[1] - new_height) // 2
+
+    # Place the resized image on the canvas
+    final_image[y_offset:y_offset + new_height, x_offset:x_offset + new_width] = resized_image
+
+    return final_image
 
 def preprocess(image):
     results=[]
