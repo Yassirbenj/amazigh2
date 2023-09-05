@@ -133,7 +133,7 @@ def preprocess(image):
 #    point_display_radius = st.sidebar.slider("Point display radius: ", 1, 25, 3)
 
 
-realtime_update = st.sidebar.checkbox("Update in realtime", True)
+#realtime_update = st.sidebar.checkbox("Update in realtime", True)
 
 with st.form("input_form",clear_on_submit=True):
     st.write("<h3>Upload your image for the magic ✨</h3>", unsafe_allow_html=True)
