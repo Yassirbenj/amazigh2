@@ -107,9 +107,11 @@ def preprocess(image):
         img_tensor=tf.convert_to_tensor(resized_array)
         results["x"]=x
         results["tensor"]=img_tensor
-        results_list=sorted(results.items(), key=lambda x:x[1], reverse=False)
-        st.text(results_list)
-        #results.append(img_tensor)
+
+    st.text(results)
+    results_list=sorted(results.items(), key=lambda x:x[1], reverse=False)
+    st.text(results_list)
+    #results.append(img_tensor)
     return results_list
 
 
