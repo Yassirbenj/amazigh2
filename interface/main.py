@@ -42,9 +42,7 @@ def pad_image(image,desired_size):
     top_pad = (desired_size - height) // 2
     bottom_pad = desired_size - height - top_pad
     left_pad = (desired_size - width) // 2
-    st.text(left_pad)
     right_pad = desired_size - width - left_pad
-    st.text(right_pad)
 
     # Copy the original image into the center of the square canvas
     square_image[top_pad:top_pad+height, left_pad:left_pad+width] = image
