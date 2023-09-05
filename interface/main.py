@@ -118,7 +118,7 @@ def preprocess(image):
         #resized_array = cv2.resize(item, (64, 64))
         st.image(img_array)
         st.text(img_array.shape)
-        #resized_array = resized_array[:,:,3]
+        resized_array = img_array[:,:,3]
         #resized_array = np.expand_dims(resized_array, axis=-1)
         img_tensor=tf.convert_to_tensor(img_array)
         results.append(img_tensor)
