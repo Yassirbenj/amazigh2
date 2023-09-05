@@ -156,6 +156,7 @@ with st.form("input_form",clear_on_submit=True):
         if input_img is not None:
             st.text(input_img.shape)
             result=[]
+            proba_list=[]
             result_proba=100
             imgs=preprocess(input_img)
             loaded_model = load_model()
@@ -165,5 +166,7 @@ with st.form("input_form",clear_on_submit=True):
                 letter=prediction[0]
                 proba= prediction[1]
                 result.append(letter)
+                proba_list.append(proba)
                 result_proba*=float(proba)/100
             st.write(f"<h3>The prediction is: {result} with probability of {result_proba}% </h3>", unsafe_allow_html=True)
+            st.write(proba_list)
