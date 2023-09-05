@@ -103,20 +103,23 @@ def preprocess(image):
         item = image[y_min:y+h, x:x+w]
         st.image(item)
         st.text(item.shape)
-        desired_size=y+h-y_min
-        st.text(desired_size)
+        #desired_size=y+h-y_min
+        #st.text(desired_size)
         #resized_array=pad_image(item,desired_size)
         resized_array=item
         #st.image(resized_array)
         #st.text(resized_array.shape)
         #resized_array = resized_array[:,:,3]
-        resized_array=resize_image(resized_array,(64,64))
+        new_image=img.resize((64,64))
+        img_array = np.array(new_image)
+        img_array=np.reshape(img_array,(64,64,1))
+        #resized_array=resize_image(resized_array,(64,64))
         #resized_array = cv2.resize(item, (64, 64))
-        st.image(resized_array)
-        st.text(resized_array.shape)
-        resized_array = resized_array[:,:,3]
-        resized_array = np.expand_dims(resized_array, axis=-1)
-        img_tensor=tf.convert_to_tensor(resized_array)
+        st.image(img_array)
+        st.text(img_array.shape)
+        #resized_array = resized_array[:,:,3]
+        #resized_array = np.expand_dims(resized_array, axis=-1)
+        img_tensor=tf.convert_to_tensor(img_array)
         results.append(img_tensor)
     return results
 
