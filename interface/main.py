@@ -91,7 +91,7 @@ def preprocess(image):
             y_min=y
         x_list[i]=x
 
-    x_list = sorted(x_list.items(), key=lambda x:x[1], reverse=True)
+    x_list = sorted(x_list.items(), key=lambda x:x[1], reverse=False)
     st.text(x_list)
 
     for contour in contours:
