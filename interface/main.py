@@ -110,7 +110,7 @@ def preprocess(image):
 
     st.text(results)
     results_list=sorted(results.items(), key=lambda x:x[0], reverse=False)
-    st.text(results_list)
+    st.text(len(results_list))
     #results.append(img_tensor)
     return results_list
 
