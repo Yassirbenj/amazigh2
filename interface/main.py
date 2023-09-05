@@ -125,12 +125,12 @@ def preprocess(image):
     return results
 
 # Specify canvas parameters in application
-drawing_mode = st.sidebar.selectbox(
-    "Drawing tool:", ("point", "freedraw"))
+#drawing_mode = st.sidebar.selectbox(
+#    "Drawing tool:", ("point", "freedraw"))
 
-stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 3)
-if drawing_mode == 'point':
-    point_display_radius = st.sidebar.slider("Point display radius: ", 1, 25, 3)
+#stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 3)
+#if drawing_mode == 'point':
+#    point_display_radius = st.sidebar.slider("Point display radius: ", 1, 25, 3)
 
 
 realtime_update = st.sidebar.checkbox("Update in realtime", True)
@@ -139,14 +139,14 @@ with st.form("input_form",clear_on_submit=True):
     st.write("<h3>Upload your image for the magic ✨</h3>", unsafe_allow_html=True)
     canvas_result = st_canvas(
                     fill_color="rgba(255, 255, 255, 0.3)",  # Fixed fill color with some opacity
-                    stroke_width=stroke_width,
+                    stroke_width=5,
                     #stroke_color=stroke_color,
                     #background_color=bg_color,
                     #background_image=Image.open(bg_image) if bg_image else None,
-                    update_streamlit=realtime_update,
-                    height=150,
-                    drawing_mode=drawing_mode,
-                    point_display_radius=point_display_radius if drawing_mode == 'point' else 0,
+                    update_streamlit=True,
+                    height=250,
+                    drawing_mode="freedraw",
+                    #point_display_radius=point_display_radius if drawing_mode == 'point' else 0,
                     key="canvas",
                     )
     input_img=canvas_result.image_data
