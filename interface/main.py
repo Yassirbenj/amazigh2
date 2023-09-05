@@ -92,7 +92,7 @@ def preprocess(image):
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         item = image[y_min:y+h, x:x+w]
-        st.image(item)
+        #st.image(item)
         desired_size=y+h-y_min
         resized_array=pad_image(item,desired_size)
         resized_array=resize_image(resized_array,(64,64))
