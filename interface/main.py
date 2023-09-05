@@ -110,7 +110,7 @@ def preprocess(image):
 
     st.text(results)
     results_list=sorted(results.items(), key=lambda x:x[0], reverse=False)
-    st.text(len(results_list))
+    #st.text(len(results_list))
     #results.append(img_tensor)
     return results_list
 
@@ -138,6 +138,7 @@ with st.form("input_form",clear_on_submit=True):
             imgs=preprocess(input_img)
             loaded_model = load_model()
             for img in imgs:
+                st.text(img)
                 st.image(img[1].numpy())
                 prediction = predict(loaded_model,img[1])
                 letter=prediction[0]
