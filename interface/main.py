@@ -141,8 +141,8 @@ with st.form("input_form",clear_on_submit=True):
             loaded_model = load_model()
             for img in imgs:
                 st.text(img)
-                st.image(img[1].numpy())
-                prediction = predict(loaded_model,img[1])
+                st.image(img['tensor'].numpy())
+                prediction = predict(loaded_model,img['tensor'])
                 letter=prediction[0]
                 proba= prediction[1]
                 result.append(letter)
