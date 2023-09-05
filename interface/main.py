@@ -89,9 +89,6 @@ def preprocess(image):
         if y<y_min:
             y_min=y
 
-    x_list = sorted(x_list.items(), key=lambda x:x[1], reverse=False)
-    st.text(x_list)
-
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         item = image[y_min:y+h, x:x+w]
