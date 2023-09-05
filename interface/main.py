@@ -95,7 +95,7 @@ def preprocess(image):
         x, y, w, h = cv2.boundingRect(contour)
         item = image[y_min:y+h, x:x+w]
         st.image(item)
-        st.text(x)
+        st.text(f"x={x}")
         desired_size=y+h-y_min
         resized_array=pad_image(item,desired_size)
         st.image(resized_array)
