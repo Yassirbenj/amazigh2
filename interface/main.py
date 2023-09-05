@@ -113,7 +113,7 @@ def preprocess(image):
         img = Image.fromarray(item)
         new_image=img.resize((64,64))
         img_array = np.array(new_image)
-        img_array=np.reshape(img_array,(64,64,1))
+        #img_array=np.reshape(img_array,(64,64,1))
         #resized_array=resize_image(resized_array,(64,64))
         #resized_array = cv2.resize(item, (64, 64))
         st.image(img_array)
