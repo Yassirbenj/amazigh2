@@ -84,12 +84,10 @@ def preprocess(image):
     thresh = cv2.threshold(image_rescale, 0, 255, cv2.THRESH_BINARY)[1]
     contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     y_min=1000
-    x_list={}
     for i,contour in enumerate(contours):
         x, y, w, h = cv2.boundingRect(contour)
         if y<y_min:
             y_min=y
-        x_list[i]=x
 
     x_list = sorted(x_list.items(), key=lambda x:x[1], reverse=False)
     st.text(x_list)
@@ -98,10 +96,8 @@ def preprocess(image):
         x, y, w, h = cv2.boundingRect(contour)
         item = image[y_min:y+h, x:x+w]
         st.image(item)
-        st.text(f"x={x}")
         desired_size=y+h-y_min
         resized_array=pad_image(item,desired_size)
-        st.image(resized_array)
         resized_array=resize_image(resized_array,(64,64))
         resized_array = resized_array[:,:,3]
         img_tensor=tf.convert_to_tensor(resized_array)
@@ -110,10 +106,8 @@ def preprocess(image):
         results["tensor"]=img_tensor
         results_list.append(results)
 
-    st.text(results_list)
+
     sorted_list=sorted(results_list, key=lambda x:x['x'])
-    #st.text(len(results_list))
-    #results.append(img_tensor)
     return sorted_list
 
 
@@ -133,14 +127,12 @@ with st.form("input_form",clear_on_submit=True):
     #input_img = st.file_uploader('character image',type=['png', 'jpg','jpeg'])
     if st.form_submit_button("Predict"):
         if input_img is not None:
-            st.text(input_img.shape)
             result=[]
             proba_list=[]
             result_proba=100
             imgs=preprocess(input_img)
             loaded_model = load_model()
             for img in imgs:
-                st.text(img)
                 st.image(img['tensor'].numpy())
                 prediction = predict(loaded_model,img['tensor'])
                 letter=prediction[0]
