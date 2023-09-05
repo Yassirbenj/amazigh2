@@ -79,7 +79,7 @@ def resize_image(image,desired_size):
     return final_image
 
 def preprocess(image):
-    results={}
+    results_list=[]
     image_rescale=image[:,:,3]
     thresh = cv2.threshold(image_rescale, 0, 255, cv2.THRESH_BINARY)[1]
     contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -105,14 +105,16 @@ def preprocess(image):
         resized_array=resize_image(resized_array,(64,64))
         resized_array = resized_array[:,:,3]
         img_tensor=tf.convert_to_tensor(resized_array)
+        results={}
         results["x"]=x
         results["tensor"]=img_tensor
+        results_list.append(results)
 
-    st.text(results)
-    results_list=sorted(results.items(), key=lambda x:x[0], reverse=False)
+    st.text(results_list)
+    sorted_list=sorted(results_list, key=lambda x:x['x'])
     #st.text(len(results_list))
     #results.append(img_tensor)
-    return results_list
+    return sorted_list
 
 
 
