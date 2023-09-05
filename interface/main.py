@@ -51,6 +51,27 @@ def pad_image(image,desired_size):
 
     return square_image
 
+def resize_image(image,desired_size):
+    original_height, original_width, _ = image.shape
+
+    # Calculate the center of the original image
+    center_x = original_width // 2
+    center_y = original_height // 2
+
+    # Calculate the crop box
+    crop_x1 = max(center_x - desired_size[0] // 2, 0)
+    crop_x2 = min(center_x + desired_size[0] // 2, original_width)
+    crop_y1 = max(center_y - desired_size[1] // 2, 0)
+    crop_y2 = min(center_y + desired_size[1] // 2, original_height)
+
+    # Crop the image to the desired size
+    cropped_image = image[crop_y1:crop_y2, crop_x1:crop_x2]
+
+    # Resize the cropped image to (64, 64) if necessary (in case the aspect ratio didn't match)
+    #resized_image = cv2.resize(cropped_image, desired_size)
+
+    return cropped_image
+
 def preprocess(image):
     results=[]
     image_rescale=image[:,:,3]
@@ -79,7 +100,8 @@ def preprocess(image):
         resized_array=pad_image(item,desired_size)
         st.image(resized_array)
         st.text(resized_array.shape)
-        resized_array = cv2.resize(item, (64, 64))
+        resize_image(resized_array,(64,64))
+        #resized_array = cv2.resize(item, (64, 64))
         st.image(resized_array)
         resized_array = resized_array[:,:,3]
         resized_array = np.expand_dims(resized_array, axis=-1)
