@@ -84,10 +84,14 @@ def preprocess(image):
     thresh = cv2.threshold(image_rescale, 0, 255, cv2.THRESH_BINARY)[1]
     contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     y_min=1000
-    for contour in contours:
+    x_list={}
+    for i,contour in enumerate(contours):
         x, y, w, h = cv2.boundingRect(contour)
         if y<y_min:
             y_min=y
+        x_list[i]=x
+
+    st.text(x_list)
 
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
