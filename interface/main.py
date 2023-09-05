@@ -120,7 +120,7 @@ def preprocess(image):
         st.text(img_array.shape)
         resized_array = img_array[:,:,3]
         #resized_array = np.expand_dims(resized_array, axis=-1)
-        img_tensor=tf.convert_to_tensor(img_array)
+        img_tensor=tf.convert_to_tensor(resized_array)
         results.append(img_tensor)
     return results
 
