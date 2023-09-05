@@ -84,69 +84,37 @@ def preprocess(image):
     results=[]
     image_rescale=image[:,:,3]
     thresh = cv2.threshold(image_rescale, 0, 255, cv2.THRESH_BINARY)[1]
-    st.image(thresh)
     contours,hierarchy=cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     y_min=1000
-    y_max=0
-    h_max=0
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         if y<y_min:
             y_min=y
-        if y>y_max:
-            y_max=y
-        if h>h_max:
-            h_max=h
 
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         item = image[y_min:y+h, x:x+w]
         st.image(item)
-        st.text(item.shape)
+        st.text(x)
         desired_size=y+h-y_min
-        #st.text(desired_size)
         resized_array=pad_image(item,desired_size)
-        #resized_array=item
         st.image(resized_array)
-        st.text(resized_array.shape)
-        #resized_array = resized_array[:,:,3]
-        #img = Image.fromarray(item)
-        #new_image=img.resize((64,64))
-        #img_array = np.array(new_image)
-        #img_array=np.reshape(img_array,(64,64,1))
         resized_array=resize_image(resized_array,(64,64))
-        #resized_array = cv2.resize(item, (64, 64))
-        #st.image(img_array)
-        #st.text(img_array.shape)
         resized_array = resized_array[:,:,3]
-        #resized_array = np.expand_dims(resized_array, axis=-1)
         img_tensor=tf.convert_to_tensor(resized_array)
         results.append(img_tensor)
     return results
 
-# Specify canvas parameters in application
-#drawing_mode = st.sidebar.selectbox(
-#    "Drawing tool:", ("point", "freedraw"))
 
-#stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 3)
-#if drawing_mode == 'point':
-#    point_display_radius = st.sidebar.slider("Point display radius: ", 1, 25, 3)
-
-
-#realtime_update = st.sidebar.checkbox("Update in realtime", True)
 
 with st.form("input_form",clear_on_submit=True):
     st.write("<h3>Upload your image for the magic ✨</h3>", unsafe_allow_html=True)
     canvas_result = st_canvas(
                     fill_color="rgba(255, 255, 255, 0.3)",  # Fixed fill color with some opacity
                     stroke_width=5,
-                    #stroke_color=stroke_color,
-                    #background_color=bg_color,
-                    #background_image=Image.open(bg_image) if bg_image else None,
                     update_streamlit=True,
                     height=250,
                     drawing_mode="freedraw",
-                    #point_display_radius=point_display_radius if drawing_mode == 'point' else 0,
                     key="canvas",
                     )
     input_img=canvas_result.image_data
