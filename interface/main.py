@@ -100,9 +100,10 @@ def preprocess(image):
         resized_array=pad_image(item,desired_size)
         st.image(resized_array)
         st.text(resized_array.shape)
-        resize_image(resized_array,(64,64))
+        resized_array=resize_image(resized_array,(64,64))
         #resized_array = cv2.resize(item, (64, 64))
         st.image(resized_array)
+        st.text(resized_array.shape)
         resized_array = resized_array[:,:,3]
         resized_array = np.expand_dims(resized_array, axis=-1)
         img_tensor=tf.convert_to_tensor(resized_array)
